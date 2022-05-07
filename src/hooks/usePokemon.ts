@@ -1,17 +1,13 @@
 import { useQuery } from 'react-query'
 
-import {
-  getByUrl as getByUrlPokemon,
-  // transformApiDataToModel as transformApiDataToModelPokemonList,
-} from 'services/pokemon'
+import { getByUrl as getByUrlPokemon } from 'services/pokemon'
 
 const usePokemon = (url = '') => {
   return useQuery(
     'pokemon',
     () =>
       getByUrlPokemon(url).then(response => {
-        console.log(response)
-        return response
+        return response.data
       }),
     {
       refetchOnWindowFocus: false,

@@ -1,4 +1,4 @@
-interface PokemonListItem {
+export interface PokemonListItem {
   id: string
   name: string
   url: string

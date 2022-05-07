@@ -5,10 +5,13 @@ import ArrowBack from '@mui/icons-material/ArrowBack'
 import Image from '@mui/icons-material/Image'
 import Button from '@mui/material/Button'
 
+import SectoinTitle from 'components/atoms/section-title'
 import ScreenLoader from 'components/molecules/screen-loader'
 import MainTemplate from 'components/templates/main'
 import usePokemon from 'hooks/usePokemon'
 
+import Abilties from './components/abilities'
+import Moves from './components/moves'
 import * as S from './styled'
 
 const Pokemon = (): JSX.Element => {
@@ -21,6 +24,8 @@ const Pokemon = (): JSX.Element => {
   }
 
   const { data: pokemon, error, isFetching } = usePokemon(externalUrl)
+
+  console.log(pokemon)
 
   if (isFetching) {
     return (
@@ -61,15 +66,18 @@ const Pokemon = (): JSX.Element => {
             </Button>
           </S.Item>
           <S.Item>
-            {pokemon.data.sprites.back_default ? (
-              <img loading='lazy' src={pokemon?.data.sprites.back_default}></img>
-            ) : (
-              <Image />
-            )}
+            {pokemon.sprites.back_default ? <img loading='lazy' src={pokemon.sprites.back_default}></img> : <Image />}
           </S.Item>
-          <S.Item>{pokemon?.data.name}</S.Item>
-          <S.Item>Abilities</S.Item>
-          <S.Item>Moves.</S.Item>
+          <S.Item>
+            <SectoinTitle>Name</SectoinTitle>
+            {pokemon.name}
+          </S.Item>
+          <S.Item>
+            <Abilties abilities={pokemon.abilities} />
+          </S.Item>
+          <S.Item>
+            <Moves moves={pokemon.moves} />
+          </S.Item>
           <S.Item>is_battle_only.</S.Item>
         </S.BoardWrapper>
       </S.Wrapper>

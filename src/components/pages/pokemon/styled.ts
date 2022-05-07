@@ -11,12 +11,13 @@ export const BoardWrapper = styled.div`
 `
 
 export const Item = styled.div`
-  margin: 4px 0 4px 0;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 8px 0 8px 0;
 `
 
 export const Wrapper = styled.div`
   display: flex;
   flex: 1;
-  height: calc(100% - 32px);
-  overflow-y: hidden;
 `

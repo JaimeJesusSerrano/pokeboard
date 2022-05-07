@@ -2,13 +2,14 @@ import { useQuery } from 'react-query'
 
 import {
   getAll as getAllPokemonList,
-  transformApiDataToModel as transformApiDataToModelPokemonList,
+  transformGetAllApiDataToModel as transformGetAllApiDataToModelPokemonList,
 } from 'services/pokemon'
 
 const usePokemonList = (searchValue = '') => {
   return useQuery(
     'pokemonList',
-    () => getAllPokemonList().then(response => (response.data = transformApiDataToModelPokemonList(response.data))),
+    () =>
+      getAllPokemonList().then(response => (response.data = transformGetAllApiDataToModelPokemonList(response.data))),
     {
       staleTime: 60000, // keep cached 1 minute
       select: pokemonList => {

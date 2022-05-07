@@ -1,6 +1,6 @@
 import PokemonListItem from './PokemonListItem'
 
-interface PokemonList {
+export interface PokemonList {
   count: number
   next?: string
   previous?: string

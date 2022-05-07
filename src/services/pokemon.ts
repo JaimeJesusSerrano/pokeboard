@@ -13,7 +13,20 @@ export const getByUrl = (url: string): Promise<AxiosResponse<PokemonApi>> => {
   return axios.get(url)
 }
 
-export const transformApiDataToModel = (apiData: PokemonListApi): PokemonListModel => {
+export const transformGetAllApiDataToModel = (apiData: PokemonListApi): PokemonListModel => {
+  const pokemonList: PokemonListItemModel[] = apiData.results.map(pokemon => {
+    return { ...pokemon, id: pokemon.name }
+  })
+
+  return {
+    count: apiData.count,
+    next: apiData.next,
+    previous: apiData.previous,
+    results: pokemonList,
+  }
+}
+
+export const transformGetByUrlApiDataToModel = (apiData: PokemonListApi): PokemonListModel => {
   const pokemonList: PokemonListItemModel[] = apiData.results.map(pokemon => {
     return { ...pokemon, id: pokemon.name }
   })
