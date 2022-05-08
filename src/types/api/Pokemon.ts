@@ -9,6 +9,11 @@ export interface PokemonAbilityData {
   url: string
 }
 
+export interface PokemonFirstForm {
+  id: number
+  is_battle_only: boolean
+}
+
 export interface PokemonForms {
   name: string
   url: string
@@ -31,6 +36,7 @@ export interface PokemonSprites {
 export interface Pokemon {
   abilities: PokemonAbility[]
   forms: PokemonForms[]
+  firstForm?: PokemonFirstForm
   moves: PokemonMove[]
   name: string
   sprites: PokemonSprites

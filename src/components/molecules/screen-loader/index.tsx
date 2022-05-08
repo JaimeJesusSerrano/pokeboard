@@ -8,7 +8,7 @@ import * as S from './styled'
 
 const ScreenLoader = (): JSX.Element => {
   return (
-    <Backdrop open={true} style={{ zIndex: 9999 }}>
+    <Backdrop data-testid='screen-loader' open={true} style={{ zIndex: 9999 }}>
       <S.Body>
         <LoaderAnimation />
       </S.Body>

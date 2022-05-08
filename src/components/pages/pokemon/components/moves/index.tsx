@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 
@@ -14,23 +14,28 @@ interface ParamTypes {
 const getIdFromUrlRegex = new RegExp(/^.*\/(\d+)\/$/g)
 
 const Moves = ({ moves }: ParamTypes): JSX.Element => {
-  const movesSorted = moves.sort((moveA, moveB) => {
-    const moveAMatch = getIdFromUrlRegex.exec(moveA.move.url)
-    const moveAId = moveAMatch?.[1] || 0
+  const getMovesSorted = useCallback(
+    (moves: PokemonMove[]) => {
+      return moves.sort((moveA, moveB) => {
+        const moveAMatch = getIdFromUrlRegex.exec(moveA.move.url)
+        const moveAId = moveAMatch?.[1] || 0
 
-    const moveBMatch = getIdFromUrlRegex.exec(moveB.move.url)
-    const moveBId = moveBMatch?.[1] || 0
+        const moveBMatch = getIdFromUrlRegex.exec(moveB.move.url)
+        const moveBId = moveBMatch?.[1] || 0
 
-    if (moveAId < moveBId) {
-      return -1
-    } else if (moveAId > moveBId) {
-      return 1
-    }
+        if (moveAId < moveBId) {
+          return -1
+        } else if (moveAId > moveBId) {
+          return 1
+        }
 
-    return 0
-  })
+        return 0
+      })
+    },
+    [moves]
+  )
 
-  const [currentMovesSorted, setCurrentMovesSorted] = useState(movesSorted)
+  const [currentMovesSorted, setCurrentMovesSorted] = useState(getMovesSorted(moves))
 
   const onDeleteMove = (urlToDelete: string) => {
     setCurrentMovesSorted(currentMovesSorted.filter(currentMoveSorted => currentMoveSorted.move.url !== urlToDelete))

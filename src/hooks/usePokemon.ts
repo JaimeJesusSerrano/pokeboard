@@ -11,13 +11,6 @@ const usePokemon = (url = '') => {
       }),
     {
       refetchOnWindowFocus: false,
-      // staleTime: 60000, // keep cached 1 minute
-      // select: pokemonList => {
-      //   return {
-      //     ...pokemonList,
-      //     results: pokemonList.results.filter(pokemonListItem => pokemonListItem.name.includes(searchValue)),
-      //   }
-      // },
     }
   )
 }

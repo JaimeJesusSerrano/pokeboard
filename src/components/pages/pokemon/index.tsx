@@ -9,10 +9,13 @@ import SectoinTitle from 'components/atoms/section-title'
 import ScreenLoader from 'components/molecules/screen-loader'
 import MainTemplate from 'components/templates/main'
 import usePokemon from 'hooks/usePokemon'
+import usePokemonFirstForm from 'hooks/usePokemonFirstForm'
 
 import Abilties from './components/abilities'
 import Moves from './components/moves'
 import * as S from './styled'
+import FirstForm from './components/first-form'
+import LoaderAnimation from 'components/atoms/loader-animation'
 
 const Pokemon = (): JSX.Element => {
   const navigate = useNavigate()
@@ -23,11 +26,12 @@ const Pokemon = (): JSX.Element => {
     navigate('/')
   }
 
-  const { data: pokemon, error, isFetching } = usePokemon(externalUrl)
+  const { data: pokemon, error: pokemonError, isFetching: isFetchingPokemon } = usePokemon(externalUrl)
+  const { data: pokemonFirstForm, isFetching: isFetchingFirstFormPokemon } = usePokemonFirstForm(
+    pokemon?.forms?.[0].url
+  )
 
-  console.log(pokemon)
-
-  if (isFetching) {
+  if (isFetchingPokemon) {
     return (
       <MainTemplate>
         <S.Wrapper>
@@ -39,7 +43,7 @@ const Pokemon = (): JSX.Element => {
     )
   }
 
-  if (!pokemon || error) {
+  if (!pokemon || pokemonError) {
     return (
       <MainTemplate>
         <S.Wrapper>
@@ -78,7 +82,13 @@ const Pokemon = (): JSX.Element => {
           <S.Item>
             <Moves moves={pokemon.moves} />
           </S.Item>
-          <S.Item>is_battle_only.</S.Item>
+          {isFetchingFirstFormPokemon && !pokemonFirstForm ? (
+            <LoaderAnimation />
+          ) : (
+            <S.Item>
+              <FirstForm firstForm={pokemonFirstForm} />
+            </S.Item>
+          )}
         </S.BoardWrapper>
       </S.Wrapper>
     </MainTemplate>
