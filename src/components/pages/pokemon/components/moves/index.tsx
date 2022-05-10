@@ -11,22 +11,22 @@ interface ParamTypes {
   moves: PokemonMove[]
 }
 
-const getIdFromUrlRegex = new RegExp(/^.*\/(\d+)\/$/g)
-
 const Moves = ({ moves }: ParamTypes): JSX.Element => {
   const getMovesSorted = useCallback(
     (moves: PokemonMove[]) => {
       return moves.sort((moveA, moveB) => {
+        const getIdFromUrlRegex = new RegExp(/^.*\/(\d+)\/$/g)
         const moveAMatch = getIdFromUrlRegex.exec(moveA.move.url)
-        const moveAId = moveAMatch?.[1] || 0
+        const moveAId = moveAMatch?.[1] ? parseInt(moveAMatch[1]) : 0
 
+        getIdFromUrlRegex.lastIndex = 0
         const moveBMatch = getIdFromUrlRegex.exec(moveB.move.url)
-        const moveBId = moveBMatch?.[1] || 0
+        const moveBId = moveBMatch?.[1] ? parseInt(moveBMatch[1]) : 0
 
         if (moveAId < moveBId) {
-          return -1
-        } else if (moveAId > moveBId) {
           return 1
+        } else if (moveAId > moveBId) {
+          return -1
         }
 
         return 0
